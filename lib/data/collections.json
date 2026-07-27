@@ -1,0 +1,26 @@
+[
+  {
+    "id": "col-1",
+    "name": "The Monsoon Edit",
+    "slug": "monsoon-edit",
+    "season": "SS26",
+    "description": "Dresses crafted for rain-soaked evenings, wet pavement reflections, and quiet stillness.",
+    "heroImage": "/images/hero-1.png"
+  },
+  {
+    "id": "col-2",
+    "name": "Resort & Dusk",
+    "slug": "resort-dusk",
+    "season": "Resort '26",
+    "description": "Lightweight bias cuts and flowing silks made to breathe with the coastal wind.",
+    "heroImage": "/images/dress-3-a.png"
+  },
+  {
+    "id": "col-3",
+    "name": "Archival Silhouettes",
+    "slug": "archival",
+    "season": "Permanent Collection",
+    "description": "Timeless columns and draped cuts designed to transcend seasonal trends.",
+    "heroImage": "/images/dress-4-a.png"
+  }
+]

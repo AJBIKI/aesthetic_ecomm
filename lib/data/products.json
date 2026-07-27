@@ -1,0 +1,165 @@
+[
+  {
+    "id": "p-1",
+    "name": "The Midnight Bias Gown",
+    "slug": "midnight-bias-gown",
+    "price": 18500,
+    "currency": "INR",
+    "collection": "monsoon-edit",
+    "category": "Evening Wear",
+    "tagline": "Heavy mulberry silk. Falls with quiet weight.",
+    "description": "Cut on the bias for fluid movement that clings gracefully to every curve. Features an open back, hand-finished seams, and subtle weight at the hem to anchor the drape.",
+    "details": [
+      "100% 30-momme mulberry silk",
+      "Bias-cut construction for natural elasticity",
+      "Delicate spaghetti shoulder straps",
+      "Floor-length hem with reinforced silk lining",
+      "Dry clean only"
+    ],
+    "fabric": "30-momme mulberry silk",
+    "care": "Dry clean only",
+    "sizes": ["XS", "S", "M", "L"],
+    "inStock": true,
+    "isFeatured": true,
+    "images": {
+      "primary": "/images/dress-1-a.png",
+      "hover": "/images/dress-1-b.png",
+      "gallery": ["/images/dress-1-a.png", "/images/dress-1-b.png", "/images/hero-1.png"]
+    }
+  },
+  {
+    "id": "p-2",
+    "name": "Sculpted Ivory Crepe Midi",
+    "slug": "sculpted-ivory-crepe-midi",
+    "price": 14200,
+    "currency": "INR",
+    "collection": "archival",
+    "category": "Cocktail",
+    "tagline": "Sculptural draped collar. Crisp organic crepe.",
+    "description": "Architectural folds across the bust transition into a fitted waist and relaxed A-line hem. Designed for quiet presence in high-ceilinged rooms.",
+    "details": [
+      "Heavyweight double crepe",
+      "Concealed Japanese YKK zip at back",
+      "Unlined body for breathable drape",
+      "Hits just below the knee"
+    ],
+    "fabric": "100% Japanese double crepe",
+    "care": "Dry clean only",
+    "sizes": ["S", "M", "L"],
+    "inStock": true,
+    "isFeatured": false,
+    "images": {
+      "primary": "/images/dress-2-a.png",
+      "hover": "/images/dress-2-b.png",
+      "gallery": ["/images/dress-2-a.png", "/images/dress-2-b.png"]
+    }
+  },
+  {
+    "id": "p-3",
+    "name": "Deep Ocean Cowl Gown",
+    "slug": "deep-ocean-cowl-gown",
+    "price": 21000,
+    "currency": "INR",
+    "collection": "monsoon-edit",
+    "category": "Gowns",
+    "tagline": "Saturated deep teal silk with asymmetrical neckline.",
+    "description": "Inspired by monsoon sea reflections. The deep cowl neck cascades into a single draped shoulder, continuing down into an elegant side slit.",
+    "details": [
+      "100% sand-washed silk charmeuse",
+      "Asymmetrical hand-draped neck",
+      "Discreet side seam slit",
+      "Invisible side zipper closure"
+    ],
+    "fabric": "Sand-washed silk charmeuse",
+    "care": "Specialist silk dry clean",
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "inStock": true,
+    "isFeatured": true,
+    "images": {
+      "primary": "/images/dress-3-a.png",
+      "hover": "/images/dress-3-b.png",
+      "gallery": ["/images/dress-3-a.png", "/images/dress-3-b.png"]
+    }
+  },
+  {
+    "id": "p-4",
+    "name": "Obsidian Column Dress",
+    "slug": "obsidian-column-dress",
+    "price": 16800,
+    "currency": "INR",
+    "collection": "archival",
+    "category": "Evening Wear",
+    "tagline": "Minimalist architectural silhouette in midnight indigo wool-blend.",
+    "description": "A stark, confident floor-length column dress. High square neckline with clean shoulder tailoring that creates a striking visual frame.",
+    "details": [
+      "Virgin wool and silk twill blend",
+      "Structured bodice with soft boning",
+      "Back vent for ease of walking",
+      "Fully silk-lined"
+    ],
+    "fabric": "Virgin wool & silk twill",
+    "care": "Dry clean only",
+    "sizes": ["S", "M", "L"],
+    "inStock": true,
+    "isFeatured": false,
+    "images": {
+      "primary": "/images/dress-4-a.png",
+      "hover": "/images/dress-4-b.png",
+      "gallery": ["/images/dress-4-a.png", "/images/dress-4-b.png"]
+    }
+  },
+  {
+    "id": "p-5",
+    "name": "Petrichor Drape Slip",
+    "slug": "petrichor-drape-slip",
+    "price": 12500,
+    "currency": "INR",
+    "collection": "resort-dusk",
+    "category": "Daywear",
+    "tagline": "Raw-edged washed silk in cool petrichor slate.",
+    "description": "An effortless slip dress meant to be worn unadorned. Features raw hand-fringed hems and a gentle scooped cowl neckline.",
+    "details": [
+      "Washed silk habotai",
+      "Hand-fringed hemline",
+      "Adjustable tie straps",
+      "Breathable fluid weight"
+    ],
+    "fabric": "Washed silk habotai",
+    "care": "Hand wash cold or dry clean",
+    "sizes": ["XS", "S", "M", "L"],
+    "inStock": true,
+    "isFeatured": false,
+    "images": {
+      "primary": "/images/dress-1-b.png",
+      "hover": "/images/dress-1-a.png",
+      "gallery": ["/images/dress-1-b.png", "/images/dress-1-a.png"]
+    }
+  },
+  {
+    "id": "p-6",
+    "name": "Mist Pleated Maxi Gown",
+    "slug": "mist-pleated-maxi-gown",
+    "price": 24500,
+    "currency": "INR",
+    "collection": "monsoon-edit",
+    "category": "Gowns",
+    "tagline": "Micro-pleated silk chiffon that ripples with movement.",
+    "description": "Crafted from over nine meters of sun-ray micro-pleated silk chiffon. Ripples gently with every step, evoking raindrops falling across calm water.",
+    "details": [
+      "100% silk chiffon with permanent micro-pleating",
+      "Deep V-neck front and back",
+      "Matching silk satin waist sash",
+      "Double layered silk lining"
+    ],
+    "fabric": "Micro-pleated silk chiffon",
+    "care": "Specialist dry clean only",
+    "sizes": ["S", "M", "L"],
+    "inStock": true,
+    "isFeatured": true,
+    "images": {
+      "primary": "/images/dress-2-b.png",
+      "hover": "/images/dress-2-a.png",
+      "gallery": ["/images/dress-2-b.png", "/images/dress-2-a.png"]
+    }
+  }
+]
