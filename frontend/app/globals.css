@@ -1,0 +1,142 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* === SURFACES (Petrichor Sage: soft muted greenish off-white) === */
+  --color-surface:      oklch(0.94 0.02 145);
+  --color-surface-alt:  oklch(0.90 0.025 142);
+  --color-surface-dark: oklch(0.14 0.03 145);
+
+  /* === INK (Deep Pine Black) === */
+  --color-ink:          oklch(0.14 0.025 145);
+  --color-ink-muted:    oklch(0.45 0.02 145);
+  --color-ink-inverse:  oklch(0.93 0.015 145);
+
+  /* === ACCENT (Deep Teal & Monsoon Emerald) === */
+  --color-accent:       oklch(0.55 0.12 195);
+  --color-accent-green: oklch(0.58 0.14 145);
+  --color-accent-soft:  oklch(0.82 0.05 145);
+
+  /* === BORDER === */
+  --color-border:        oklch(0.85 0.015 145);
+  --color-border-strong: oklch(0.55 0.12 195);
+
+  /* === TYPOGRAPHY === */
+  --font-display: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Satoshi', system-ui, sans-serif;
+
+  /* === SPACING (4px base) === */
+  --spacing-1:  4px;
+  --spacing-2:  8px;
+  --spacing-3:  12px;
+  --spacing-4:  16px;
+  --spacing-6:  24px;
+  --spacing-8:  32px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-24: 96px;
+  --spacing-32: 128px;
+
+  /* === RADIUS === */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-full: 9999px;
+
+  /* === SHADOW === */
+  --shadow-sm: 0 1px 3px oklch(0.20 0.02 145 / 0.06);
+  --shadow-md: 0 4px 16px oklch(0.20 0.02 145 / 0.08);
+}
+
+:root {
+  --font-satoshi: 'Satoshi', system-ui, sans-serif;
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast:   200ms;
+  --duration-normal: 500ms;
+  --duration-slow:   1200ms;
+}
+
+/* === BASE STYLES === */
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Satoshi', system-ui, -apple-system, sans-serif;
+  color: oklch(0.14 0.025 145);
+  background-color: oklch(0.94 0.02 145);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(0.94 0.02 145);
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.85 0.015 145);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.55 0.12 195);
+}
+
+/* === FOCUS STATES === */
+:focus-visible {
+  outline: 2px solid oklch(0.55 0.12 195);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* === DROP CAPS === */
+.editorial-text::first-letter {
+  float: left;
+  font-size: 4em;
+  line-height: 0.8;
+  margin-right: 0.1em;
+  font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  color: oklch(0.55 0.12 195);
+}
+
+@supports (initial-letter: 3) or (-webkit-initial-letter: 3) {
+  .editorial-text::first-letter {
+    -webkit-initial-letter: 3;
+    initial-letter: 3;
+    float: none;
+    font-size: inherit;
+    line-height: inherit;
+    margin-right: 0;
+  }
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* === SUBTLE TEXTURE LAYER === */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
