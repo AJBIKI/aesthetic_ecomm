@@ -2,22 +2,67 @@ import { ApiResponse, IssueDTO, VolumeDTO, ProductDTO } from './api-types';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000/v1';
 
+function log(...args: unknown[]) {
+  console.log('[🌐 API]', ...args);
+}
+
+function warn(...args: unknown[]) {
+  console.warn('[🌐 API]', ...args);
+}
+
 class ApiClient {
   private baseUrl: string;
+  private connected: boolean | null = null;
 
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl;
   }
 
+  /** Call once at app startup to check if backend is reachable */
+  async healthCheck(): Promise<boolean> {
+    try {
+      log(`Attempting to connect to backend at ${this.baseUrl}...`);
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 4000);
+
+      const res = await fetch(`${this.baseUrl}/issues?limit=1`, {
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+
+      if (res.ok) {
+        this.connected = true;
+        log('✅ Backend connected successfully!');
+        return true;
+      }
+
+      warn(`Backend responded with status ${res.status}`);
+      this.connected = false;
+      return false;
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      warn(`❌ Cannot reach backend: ${msg}`);
+      warn('   Falling back to static JSON data.');
+      this.connected = false;
+      return false;
+    }
+  }
+
+  isConnected(): boolean | null {
+    return this.connected;
+  }
+
   private async fetch<T>(path: string, options?: RequestInit): Promise<T | null> {
     try {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 2000);
+      const timeout = setTimeout(() => controller.abort(), 3000);
 
-      const res = await fetch(`${this.baseUrl}${path}`, {
+      const url = `${this.baseUrl}${path}`;
+      log(`→ GET ${path}`);
+
+      const res = await fetch(url, {
         ...options,
         signal: controller.signal,
-        next: { revalidate: 10 }, // Next.js ISR revalidation
         headers: {
           'Content-Type': 'application/json',
           ...options?.headers,
@@ -26,17 +71,21 @@ class ApiClient {
       clearTimeout(timeout);
 
       if (!res.ok) {
+        warn(`← ${res.status} ${path}`);
         return null;
       }
 
       const body: ApiResponse<T> = await res.json();
       if (!body || !body.success) {
+        warn(`← API error ${path}`);
         return null;
       }
 
+      log(`← ${res.status} ${path} (success)`);
       return body.data;
-    } catch {
-      // Return null on network error, connection refused, or timeout
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      warn(`⚠ ${path} — ${msg}`);
       return null;
     }
   }

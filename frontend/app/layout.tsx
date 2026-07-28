@@ -7,6 +7,7 @@ import { BagDrawer } from '@/components/layout/bag-drawer';
 import { ScrollProgress } from '@/components/layout/scroll-progress';
 import { InitialLoader } from '@/components/brand/loader';
 import { BackgroundArt } from '@/components/brand/background-art';
+import { StartupLogger } from '@/components/brand/startup-logger';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -36,6 +37,7 @@ export default function RootLayout({
         <InitialLoader />
         <ScrollProgress />
         <BackgroundArt />
+        <StartupLogger />
         <Header />
         
         <main className="min-h-screen relative z-10">
