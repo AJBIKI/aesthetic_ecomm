@@ -11,10 +11,9 @@ async function bootstrap() {
   app.setGlobalPrefix('v1');
 
   app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      'https://themonsoonclub.com',
-    ],
+    origin: process.env.CORS_ORIGIN
+      ? process.env.CORS_ORIGIN.split(',').map((s) => s.trim())
+      : ['http://localhost:3000', 'https://themonsoonclub.com'],
     credentials: true,
   });
 

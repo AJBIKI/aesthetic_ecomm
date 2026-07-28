@@ -2,14 +2,19 @@ import { ProductGrid } from '@/components/product/product-grid';
 import { Watermark } from '@/components/brand/watermark';
 import productsData from '@/lib/data/products.json';
 import { Product } from '@/lib/types';
+import { dtoToProduct } from '@/lib/mappers';
+import { api } from '@/lib/api';
 
 export const metadata = {
   title: 'All Pieces | The Monsoon Club.',
   description: 'The complete catalog of luxury silk gowns and draped dresses.',
 };
 
-export default function AllPiecesPage() {
-  const products = productsData as Product[];
+export default async function AllPiecesPage() {
+  const dtos = await api.getProducts();
+  const products: Product[] = dtos && dtos.length > 0
+    ? dtos.map(dtoToProduct)
+    : (productsData as Product[]);
 
   return (
     <div className="py-16 md:py-24 space-y-12 relative">

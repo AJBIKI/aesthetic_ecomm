@@ -6,9 +6,14 @@ import { MagazineIndex } from '@/components/sections/magazine-index';
 import { Newsletter } from '@/components/sections/newsletter';
 import productsData from '@/lib/data/products.json';
 import { Product } from '@/lib/types';
+import { dtoToProduct } from '@/lib/mappers';
+import { api } from '@/lib/api';
 
-export default function Home() {
-  const products = productsData as Product[];
+export default async function Home() {
+  const dtos = await api.getProducts();
+  const products: Product[] = dtos && dtos.length > 0
+    ? dtos.map(dtoToProduct)
+    : (productsData as Product[]);
 
   return (
     <div className="space-y-4 md:space-y-12">
