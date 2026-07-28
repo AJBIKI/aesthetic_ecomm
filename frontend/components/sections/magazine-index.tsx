@@ -13,19 +13,17 @@ export function MagazineIndex() {
   const products = productsData as Product[];
   const [activeProduct, setActiveProduct] = useState<Product>(products[0]);
   const [isHovering, setIsHovering] = useState(false);
-  const { setActiveVolume } = useStore();
-
   const handleHoverProduct = (item: Product) => {
     setActiveProduct(item);
     setIsHovering(true);
 
-    // Update global margin activeVolume dynamically based on collection
-    if (item.collection === 'monsoon-edit') {
-      setActiveVolume('VOL. I // 30-MOMME SILKS');
-    } else if (item.collection === 'resort-dusk') {
-      setActiveVolume('VOL. II // RESORT & HABOTAI');
-    } else if (item.collection === 'archival') {
-      setActiveVolume('VOL. III // ARCHIVAL SILHOUETTES');
+    const col = item.collection || '';
+    if (col === 'monsoon-edit') {
+      useStore.getState().setActiveVolume('VOL. I // 30-MOMME SILKS');
+    } else if (col === 'resort-dusk') {
+      useStore.getState().setActiveVolume('VOL. II // RESORT & HABOTAI');
+    } else if (col === 'archival') {
+      useStore.getState().setActiveVolume('VOL. III // ARCHIVAL SILHOUETTES');
     }
   };
 

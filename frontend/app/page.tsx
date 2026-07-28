@@ -12,10 +12,7 @@ export default function Home() {
 
   return (
     <div className="space-y-4 md:space-y-12">
-      {/* Digital Magazine Cover Hero */}
       <HeroSpread />
-
-      {/* Editorial Text Manifesto */}
       <EditorialText
         overline="THE PHILOSOPHY"
         title="Designed for quiet presence in high-ceilinged rooms."
@@ -25,21 +22,13 @@ export default function Home() {
           "Our Mulberry silks are sand-washed for a tactile matte finish that catches directional evening light without harsh glare. Unhurried, intentional, and unmistakably distinct."
         ]}
       />
-
-      {/* Magazine Directory / Table of Contents Section */}
       <MagazineIndex />
-
-      {/* Featured Editorial Lookbook Grid */}
       <ProductGrid
         products={products}
         subtitle="CURATED SELECTION"
         title="Featured Pieces"
       />
-
-      {/* Signature Scroll-Choreographed Lookbook Story */}
       <LookbookScroll />
-
-      {/* Newsletter Correspondence */}
       <Newsletter />
     </div>
   );

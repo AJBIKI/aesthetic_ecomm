@@ -8,32 +8,43 @@ import { Product } from '@/lib/types';
 import { useStore } from '@/lib/store';
 import { ProductCard } from '@/components/product/product-card';
 
+import { useRouter } from 'next/navigation';
+import { customerApi } from '@/lib/customer-api';
+
 interface PDPClientProps {
   product: Product;
   relatedProducts: Product[];
 }
 
 export function ProductDetailClient({ product, relatedProducts }: PDPClientProps) {
+  const router = useRouter();
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] || 'S');
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<'details' | 'fabric' | 'care'>('details');
   const [added, setAdded] = useState(false);
 
-  const { addToBag, toggleWishlist, isInWishlist, setActiveVolume } = useStore();
+  const addToBag = useStore((state) => state.addToBag);
+  const toggleWishlist = useStore((state) => state.toggleWishlist);
+  const isInWishlist = useStore((state) => state.isInWishlist);
   const isWished = isInWishlist(product.id);
 
-  // Set active volume on mount for PDP page
+  // Safe mount execution for activeVolume using getState() - prevents infinite re-render loops
   useEffect(() => {
-    if (product.collection === 'monsoon-edit') {
-      setActiveVolume('VOL. I // 30-MOMME SILKS');
-    } else if (product.collection === 'resort-dusk') {
-      setActiveVolume('VOL. II // RESORT & HABOTAI');
-    } else if (product.collection === 'archival') {
-      setActiveVolume('VOL. III // ARCHIVAL SILHOUETTES');
+    const col = product.collection || '';
+    if (col === 'monsoon-edit') {
+      useStore.getState().setActiveVolume('VOL. I // 30-MOMME SILKS');
+    } else if (col === 'resort-dusk') {
+      useStore.getState().setActiveVolume('VOL. II // RESORT & HABOTAI');
+    } else if (col === 'archival') {
+      useStore.getState().setActiveVolume('VOL. III // ARCHIVAL SILHOUETTES');
     }
-  }, [product, setActiveVolume]);
+  }, [product.id, product.collection]);
 
   const handleAdd = () => {
+    if (!customerApi.isLoggedIn()) {
+      router.push(`/login?redirect=${encodeURIComponent(`/pieces/${product.slug}`)}`);
+      return;
+    }
     addToBag(product, selectedSize);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);

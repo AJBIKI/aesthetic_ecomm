@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(npm:*)",
+      "Shell(npx prisma generate)",
+      "Shell(npx @nestjs/cli build 2 >& 1)",
+      "Shell(dir:*)"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  }
+}

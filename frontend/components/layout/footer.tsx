@@ -50,6 +50,11 @@ export function Footer() {
                   Our Story
                 </Link>
               </li>
+              <li className="pt-2 border-t border-[oklch(0.45_0.02_145)]/20">
+                <Link href="/admin/login" className="text-[oklch(0.55_0.12_195)] hover:text-white transition-colors font-mono text-[11px] uppercase tracking-wider flex items-center space-x-1">
+                  <span>✦ Atelier Admin Portal</span>
+                </Link>
+              </li>
             </ul>
           </div>
 

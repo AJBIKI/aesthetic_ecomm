@@ -23,19 +23,22 @@ export function ProductCard({
   aspectRatio = '4/5',
 }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const { toggleWishlist, isInWishlist, setActiveVolume } = useStore();
+
+  const toggleWishlist = useStore((state) => state.toggleWishlist);
+  const isInWishlist = useStore((state) => state.isInWishlist);
   const isWished = isInWishlist(product.id);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
 
-    // Dynamically update left vertical margin activeVolume based on item's collection
-    if (product.collection === 'monsoon-edit') {
-      setActiveVolume('VOL. I // 30-MOMME SILKS');
-    } else if (product.collection === 'resort-dusk') {
-      setActiveVolume('VOL. II // RESORT & HABOTAI');
-    } else if (product.collection === 'archival') {
-      setActiveVolume('VOL. III // ARCHIVAL SILHOUETTES');
+    // Dynamically update left vertical margin activeVolume using getState() to prevent re-render loops
+    const col = product.collection || '';
+    if (col === 'monsoon-edit') {
+      useStore.getState().setActiveVolume('VOL. I // 30-MOMME SILKS');
+    } else if (col === 'resort-dusk') {
+      useStore.getState().setActiveVolume('VOL. II // RESORT & HABOTAI');
+    } else if (col === 'archival') {
+      useStore.getState().setActiveVolume('VOL. III // ARCHIVAL SILHOUETTES');
     }
   };
 
@@ -71,7 +74,7 @@ export function ProductCard({
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         className={`relative w-full ${aspectClass} bg-[oklch(0.90_0.025_142)] rounded-xs overflow-hidden border border-[oklch(0.85_0.015_145)] shadow-md`}
       >
-        <Link href={`/pieces/${product.slug}`} className="block w-full h-full">
+        <Link href={`/pieces/${product.slug}`} className="block w-full h-full relative">
           {/* Primary Image */}
           <Image
             src={product.images.primary}

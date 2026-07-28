@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!product) return {};
 
   return {
-    title: `${product.name} | the monsoon club.`,
+    title: `${product.name} | The Monsoon Club.`,
     description: product.description,
     openGraph: {
       title: product.name,
@@ -42,7 +42,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const relatedProducts = products.filter((p) => p.id !== product.id).slice(0, 3);
+  const relatedProducts = products.filter((p) => p.id !== product.id && p.collection === product.collection).slice(0, 3);
 
   // JSON-LD Structured Data for SEO
   const jsonLd = {

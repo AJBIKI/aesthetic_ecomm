@@ -3,20 +3,28 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Trash2, Plus, Minus, ArrowRight, ShoppingBag } from 'lucide-react';
 import { useStore } from '@/lib/store';
+import { customerApi } from '@/lib/customer-api';
 import { Watermark } from '@/components/brand/watermark';
 
 export default function BagPage() {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const { bag, removeFromBag, updateQuantity, getBagSubtotal, clearBag } = useStore();
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    if (!customerApi.isLoggedIn()) {
+      router.push('/login?redirect=/bag');
+    }
+  }, [router]);
 
   const currentBag = mounted ? bag : [];
   const subtotal = mounted ? getBagSubtotal() : 0;
+
+  if (!mounted) return null;
 
   return (
     <div className="py-16 md:py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative">
@@ -39,42 +47,42 @@ export default function BagPage() {
         <div className="text-center py-20 space-y-6 bg-[oklch(0.925_0.008_245)] rounded-xs border border-[oklch(0.86_0.006_250)]">
           <ShoppingBag className="w-12 h-12 text-[oklch(0.55_0.12_195)] mx-auto opacity-80" />
           <div className="space-y-2">
-            <h2
+            <p
               className="text-2xl font-display text-[oklch(0.13_0.02_260)]"
               style={{ fontFamily: 'var(--font-cormorant), "Cormorant Garamond", Georgia, serif' }}
             >
-              Your bag is waiting.
-            </h2>
-            <p className="text-xs text-[oklch(0.48_0.01_255)] uppercase tracking-wider font-mono">
-              Explore the collection to add pieces.
+              Your selection bag is empty.
+            </p>
+            <p className="text-xs text-[oklch(0.48_0.01_255)] font-mono max-w-sm mx-auto">
+              Explore our current issue pieces crafted with 30-momme mulberry silks.
             </p>
           </div>
           <Link
             href="/pieces"
-            className="inline-block px-8 py-3 bg-[oklch(0.13_0.02_260)] text-[oklch(0.93_0.005_250)] text-xs uppercase tracking-[0.2em] font-medium hover:bg-[oklch(0.55_0.12_195)] transition-colors rounded-xs shadow-md"
+            className="inline-block px-8 py-3.5 bg-[oklch(0.13_0.02_260)] text-[oklch(0.93_0.005_250)] text-xs uppercase tracking-[0.2em] rounded-xs hover:bg-[oklch(0.55_0.12_195)] transition-colors font-mono shadow-md"
           >
-            Browse Collections
+            Explore Catalog
           </Link>
         </div>
       ) : (
         <div className="space-y-8">
-          {/* Bag Items */}
-          <div className="bg-[oklch(0.925_0.008_245)] rounded-xs border border-[oklch(0.86_0.006_250)] divide-y divide-[oklch(0.86_0.006_250)]">
+          {/* Items List */}
+          <div className="divide-y divide-[oklch(0.86_0.006_250)] border-y border-[oklch(0.86_0.006_250)]">
             {currentBag.map((item) => (
               <div
                 key={`${item.product.id}-${item.selectedSize}`}
-                className="p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+                className="py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
               >
                 <div className="flex items-center space-x-6">
-                  <div className="relative w-20 h-24 bg-white rounded-xs overflow-hidden shrink-0 border border-[oklch(0.86_0.006_250)]">
+                  <div className="relative w-20 h-24 bg-[oklch(0.90_0.025_142)] rounded-xs overflow-hidden shrink-0 border border-[oklch(0.86_0.006_250)] shadow-sm">
                     <Image
                       src={item.product.images.primary}
                       alt={item.product.name}
                       fill
                       className="object-cover"
+                      sizes="80px"
                     />
                   </div>
-
                   <div className="space-y-1">
                     <h3
                       className="text-lg font-display text-[oklch(0.13_0.02_260)]"
@@ -145,10 +153,13 @@ export default function BagPage() {
                 Clear Selection
               </button>
 
-              <button className="w-full sm:w-auto bg-[oklch(0.13_0.02_260)] text-[oklch(0.93_0.005_250)] py-4 px-10 rounded-xs text-xs uppercase tracking-[0.2em] font-medium hover:bg-[oklch(0.55_0.12_195)] transition-colors flex items-center justify-center space-x-3 shadow-lg">
+              <Link
+                href="/checkout"
+                className="w-full sm:w-auto bg-[oklch(0.13_0.02_260)] text-[oklch(0.93_0.005_250)] py-4 px-10 rounded-xs text-xs uppercase tracking-[0.2em] font-medium hover:bg-[oklch(0.55_0.12_195)] transition-colors flex items-center justify-center space-x-3 shadow-lg"
+              >
                 <span>Proceed to Atelier Checkout</span>
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </Link>
             </div>
           </div>
         </div>

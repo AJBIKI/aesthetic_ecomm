@@ -1,0 +1,130 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum IssueStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum StockStatus {
+  IN_STOCK
+  LOW_STOCK
+  SOLD_OUT
+}
+
+enum Size {
+  XS
+  S
+  M
+  L
+  XL
+}
+
+model Issue {
+  id          String      @id @default(cuid())
+  code        String      @unique
+  title       String
+  subtitle    String
+  season      String
+  status      IssueStatus @default(DRAFT)
+  coverImage  String
+  manifesto   Json
+  minPrice    Int         @default(12500)
+  maxPrice    Int         @default(24500)
+  cities      String[]
+  publishedAt DateTime    @default(now())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  volumes Volume[]
+  products Product[]
+}
+
+model Volume {
+  id             String   @id @default(cuid())
+  issueId        String
+  issue          Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  volumeNumber   String
+  name           String
+  fabricCategory String
+  description    String   @db.Text
+  heroImage      String
+  order          Int      @default(1)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  products Product[]
+}
+
+model Product {
+  id           String      @id @default(cuid())
+  slug         String      @unique
+  issueId      String
+  issue        Issue       @relation(fields: [issueId], references: [id])
+  volumeId     String
+  volume       Volume      @relation(fields: [volumeId], references: [id])
+  figureTag    String
+  name         String
+  price        Int
+  currency     String      @default("INR")
+  category     String
+  tagline      String
+  description  String      @db.Text
+  fabric       String
+  care         String
+  details      String[]
+  sizes        Size[]
+  stockStatus  StockStatus @default(IN_STOCK)
+  isFeatured   Boolean     @default(false)
+  primaryImage String
+  hoverImage   String
+  gallery      String[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Order {
+  id             String   @id @default(cuid())
+  orderNumber    String   @unique
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id])
+  customerName   String
+  email          String
+  phone          String
+  address        Json
+  items          Json
+  subtotal       Int
+  total          Int
+  status         String   @default("PENDING")
+  paymentId      String?
+  razorpayOrderId String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orders    Order[]
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+}

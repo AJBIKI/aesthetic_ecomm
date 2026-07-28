@@ -1,23 +1,40 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Watermark } from '@/components/brand/watermark';
 import collectionsData from '@/lib/data/collections.json';
-import { Collection } from '@/lib/types';
+import { Collection, Volume } from '@/lib/types';
 import { useStore } from '@/lib/store';
+import { api } from '@/lib/api';
+import { volumeToCollection } from '@/lib/mappers';
 
 export default function CollectionsPage() {
-  const collections = collectionsData as Collection[];
-  const { setActiveVolume } = useStore();
+  const [collections, setCollections] = useState<Collection[]>(() => {
+    // Start with static data as fallback
+    const staticCols = collectionsData as Collection[];
+    return staticCols;
+  });
+
+  useEffect(() => {
+    // Try fetching live volume data from backend
+    api.getVolumes().then((volumes) => {
+      if (volumes && volumes.length > 0) {
+        setCollections(volumes.map(volumeToCollection));
+      }
+    }).catch(() => {
+      // Keep static fallback
+    });
+  }, []);
 
   const handleMouseEnterCollection = (slug: string) => {
     if (slug === 'monsoon-edit') {
-      setActiveVolume('VOL. I // 30-MOMME SILKS');
+      useStore.getState().setActiveVolume('VOL. I // 30-MOMME SILKS');
     } else if (slug === 'resort-dusk') {
-      setActiveVolume('VOL. II // RESORT & HABOTAI');
+      useStore.getState().setActiveVolume('VOL. II // RESORT & HABOTAI');
     } else if (slug === 'archival') {
-      setActiveVolume('VOL. III // ARCHIVAL SILHOUETTES');
+      useStore.getState().setActiveVolume('VOL. III // ARCHIVAL SILHOUETTES');
     }
   };
 
