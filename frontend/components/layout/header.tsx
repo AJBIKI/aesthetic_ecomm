@@ -187,32 +187,32 @@ export function Header() {
           {/* Right: Customer Auth & Protected Bag Trigger */}
           <div className="flex items-center space-x-3 shrink-0">
             
-            {/* Customer Sign In / Account Link */}
+            {/* Customer Sign In / Account Link (Desktop only, mobile uses sidebar) */}
             {mounted && isLoggedIn ? (
               <Link
                 href="/account"
-                className="px-3 py-1.5 text-xs font-mono uppercase tracking-[0.15em] text-[oklch(0.55_0.12_195)] hover:text-[oklch(0.14_0.025_145)] border border-[oklch(0.55_0.12_195)]/40 rounded-xs flex items-center space-x-1.5 transition-colors whitespace-nowrap"
+                className="hidden sm:inline-flex px-3 py-1.5 text-xs font-mono uppercase tracking-[0.15em] text-[oklch(0.55_0.12_195)] hover:text-[oklch(0.14_0.025_145)] border border-[oklch(0.55_0.12_195)]/40 rounded-xs items-center space-x-1.5 transition-colors whitespace-nowrap"
               >
                 <User className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Account</span>
+                <span className="hidden md:inline">Account</span>
               </Link>
             ) : (
               <Link
                 href="/login"
-                className="px-3.5 py-1.5 text-xs font-mono uppercase tracking-[0.18em] bg-[oklch(0.14_0.025_145)] text-[oklch(0.93_0.015_145)] hover:bg-[oklch(0.55_0.12_195)] rounded-xs transition-colors whitespace-nowrap shadow-sm"
+                className="hidden sm:inline-flex px-3.5 py-1.5 text-xs font-mono uppercase tracking-[0.18em] bg-[oklch(0.14_0.025_145)] text-[oklch(0.93_0.015_145)] hover:bg-[oklch(0.55_0.12_195)] rounded-xs transition-colors whitespace-nowrap shadow-sm"
               >
                 Sign In
               </Link>
             )}
 
-            {/* Shopping Bag Trigger */}
+            {/* Shopping Bag Trigger (Desktop only, mobile uses sidebar floating button) */}
             <button
               onClick={handleBagClick}
-              className="relative text-[oklch(0.14_0.025_145)] hover:text-[oklch(0.55_0.12_195)] transition-colors flex items-center space-x-2 border border-[oklch(0.85_0.015_145)] px-3 py-1.5 rounded-xs whitespace-nowrap"
+              className="hidden sm:inline-flex relative text-[oklch(0.14_0.025_145)] hover:text-[oklch(0.55_0.12_195)] transition-colors items-center space-x-2 border border-[oklch(0.85_0.015_145)] px-3 py-1.5 rounded-xs whitespace-nowrap"
               aria-label="Open shopping bag"
             >
               <ShoppingBag className="w-4 h-4" />
-              <span className="hidden sm:inline-block text-[11px] font-mono uppercase tracking-[0.15em]">Bag</span>
+              <span className="hidden md:inline-block text-[11px] font-mono uppercase tracking-[0.15em]">Bag</span>
               {mounted && bagCount > 0 && (
                 <span className="bg-[oklch(0.55_0.12_195)] text-white text-[10px] font-mono px-1.5 py-0.5 rounded-full">
                   {bagCount}
@@ -303,6 +303,18 @@ export function Header() {
                 <span className="text-xs font-mono">SIGN IN →</span>
               </Link>
             )}
+
+            {/* Bag / Cart (Mobile sidebar) */}
+            <button
+              onClick={() => { setMobileNavOpen(false); setBagOpen(true); }}
+              className="group flex items-baseline justify-between border-b border-[oklch(0.45_0.02_145)]/20 pb-4 w-full text-left"
+            >
+              <span className="font-display text-2xl tracking-[0.1em] text-[oklch(0.93_0.015_145)]" style={{ fontFamily: 'var(--font-cormorant), "Cormorant Garamond", Georgia, serif' }}>
+                Shopping Bag
+                {bagCount > 0 && <span className="ml-2 text-xs font-mono text-[oklch(0.55_0.12_195)]">({bagCount})</span>}
+              </span>
+              <span className="text-xs font-mono text-[oklch(0.55_0.12_195)]">BAG →</span>
+            </button>
           </nav>
 
           <div className="border-t border-[oklch(0.45_0.02_145)]/30 pt-6 text-xs text-[oklch(0.45_0.02_145)] space-y-2">

@@ -25,7 +25,7 @@ class ApiClient {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 4000);
 
-      const res = await fetch(`${this.baseUrl}/issues?limit=1`, {
+      const res = await fetch(`${this.baseUrl}/issues`, {
         signal: controller.signal,
       });
       clearTimeout(timeout);
